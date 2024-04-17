@@ -2,7 +2,6 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { getEnv } from './util/env-variables';
 import { User } from "./entity/User";
-
 const DB_HOST: string | undefined = getEnv('DB_HOST');
 const DB_PORT: string | undefined = getEnv('DB_PORT');
 const DB_USERNAME: string | undefined = getEnv('DB_USERNAME');
