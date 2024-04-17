@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColum
 import { User } from "./user.entity";
 import { Appointment } from "./appointment.entity";
 
-@Entity({ name: "patients" })
+@Entity({ name: "Patient" })
 export class Patient extends BaseEntity {
     @PrimaryGeneratedColumn({ name: 'id' })
     id: number;

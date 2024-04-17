@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BaseEntity } from "typeorm";
 import { Patient } from "./patient.entity";
 
-@Entity({ name: "appointments" })
+@Entity({ name: "Appointment" })
 export class Appointment extends BaseEntity {
     @PrimaryGeneratedColumn({ name: 'id' })
     id: number;

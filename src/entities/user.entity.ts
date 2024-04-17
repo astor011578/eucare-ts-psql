@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from "typeorm";
 import { Patient } from "./patient.entity";
 
-@Entity({ name: "users" })
+@Entity({ name: "User" })
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn({ name: 'id' })
     id: number;
