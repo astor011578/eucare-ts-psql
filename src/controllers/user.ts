@@ -88,7 +88,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     res.status(200).json({ message: `User ${username} login successully` });
 
   } catch (err: any) {
-    console.log(err.name);
     const isMissingField = err?.name === 'MissingFieldError';
     const isIncorrectFormat = err?.name === 'IncorrectFormatError';
     const isNonSignedUp = err?.name === 'DataNotFoundError';

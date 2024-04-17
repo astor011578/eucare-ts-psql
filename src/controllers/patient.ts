@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CustomError, IncorrectFormatError, DataNotFoundError } from "../utils/custom-errors";
+import { CustomError, DataNotFoundError } from "../utils/custom-errors";
 import { checkMissingFields, checkPhoneNumber, checkIdCardNumber } from "../utils/check-fields";
 import { AppDataSource } from "../data-source";
 import { Patient } from "../entities/patient.entity";
@@ -95,4 +95,3 @@ export const addPatient = async (req: Request, res: Response): Promise<void> => 
     res.status(statusCode).json({ message });
   }
 };
-
