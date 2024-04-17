@@ -1,18 +1,22 @@
 import "reflect-metadata";
 import * as express from "express";
-import * as path from 'path';
+import * as path from "path";
 import { Request, Response } from "express";
 import { AppDataSource } from "./data-source";
-import { config as envConfig } from 'dotenv';
-const envPath = path.resolve(__dirname, '..', 'config.env');
+import { config as envConfig } from "dotenv";
+const envPath = path.resolve(__dirname, "..", "config.env");
 envConfig({ path: envPath });
 
-import { getEnv } from './util/env-variables';
-// import { userRouter } from "./route/user";
+import { getEnv } from "./utils/env-variables";
+import { userRouter } from "./routes/user";
+import { patientRouter } from "./routes/patient";
+import { appointmentRouter } from "./routes/appointment";
 
 const app = express();
 app.use(express.json());
-// app.use('/user', userRouter);
+app.use("/user", userRouter);
+app.use("/patient", patientRouter);
+app.use("/appointment", appointmentRouter);
 
 const errorHandler = (error: Error, req: Request, res: Response) => {
     console.error(`Error: ${error.message}`);
@@ -29,10 +33,10 @@ AppDataSource.initialize()
     });
 
 app.get("*", (req: Request, res: Response) => {
-    res.status(505).json({ message: "Bad request" });
+    res.status(400).json({ message: "Bad request" });
 });
 
-const PORT = getEnv('PORT');
+const PORT = getEnv("PORT");
 const appPort: number = PORT ? Number.parseInt(PORT) : 3000;
 app.listen(appPort, () => {
     console.log(`Server is running on port ${appPort}`);

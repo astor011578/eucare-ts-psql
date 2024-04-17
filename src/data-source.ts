@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { getEnv } from './util/env-variables';
-import { User } from "./entity/User";
+import { getEnv } from './utils/env-variables';
 const DB_HOST: string | undefined = getEnv('DB_HOST');
 const DB_PORT: string | undefined = getEnv('DB_PORT');
 const DB_USERNAME: string | undefined = getEnv('DB_USERNAME');
@@ -15,9 +14,9 @@ export const AppDataSource = new DataSource({
     username: DB_USERNAME ? DB_USERNAME : 'postgres',
     password: DB_PASSWORD ? DB_PASSWORD : 'postgres',
     database: DB_NAME ? DB_NAME : 'EUCare',
-    synchronize: true,
+    synchronize: false,
     logging: false,      //logging logs sql command on the terminal
-    entities: [User],
+    entities: [`${__dirname}/**/*.entity{.ts,.js}`],
     migrations: [`${__dirname}/migration/*.ts`],
     subscribers: [],
 });
