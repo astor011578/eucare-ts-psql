@@ -42,6 +42,8 @@ export const addAppointment = async (req: Request, res: Response): Promise<void>
     /**
      * 4. 檢查此病患是否預約超過 2 個時段
     */
+    const patient = await patientRepo.findOne({ where: { id: patientId } });
+    if (!patient) throw new DataNotFoundError(`Patient #${patientId}`);
     const appointmentsOfPatient = await appointmentRepo.find({ where: { patient_id: patientId } });
     let patientCounter = 0;
     for await (const appointment of appointmentsOfPatient) {
