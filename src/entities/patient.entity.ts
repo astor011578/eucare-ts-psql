@@ -1,28 +1,29 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn, BaseEntity } from "typeorm";
 import { User } from "./user.entity";
 import { Appointment } from "./appointment.entity";
 
 @Entity({ name: "patients" })
-export class Patient {
-    @PrimaryGeneratedColumn()
-    patient_id: number;
+export class Patient extends BaseEntity {
+    @PrimaryGeneratedColumn({ name: 'id' })
+    id: number;
 
-    @Column({ nullable: false })
+    @Column({ name: 'user_id' })
     user_id: number;
 
-    @Column({ nullable: false })
+    @Column({ name: 'name' })
     name: string;
 
-    @Column({ nullable: false, length: 10, unique: true })
+    @Column({ name: 'identity_number', length: 10, unique: true })
     identity_number: string;
 
-    @Column({ nullable: false })
+    @Column({ name: 'birth_date' })
     birth_date: Date;
 
-    @Column({ nullable: false })
+    @Column({ name: 'address' })
     address: string;
 
-    @ManyToOne(() => User, user => user.patients)
+    @ManyToOne(type => User, user => user.patients)
+    @JoinColumn({ name: 'user_id' })
     user: User;
 
     @OneToMany(() => Appointment, appointment => appointment.patient)

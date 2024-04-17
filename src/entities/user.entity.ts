@@ -1,17 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from "typeorm";
 import { Patient } from "./patient.entity";
 
 @Entity({ name: "users" })
-export class User {
-    @PrimaryGeneratedColumn()
-    user_id: number;
+export class User extends BaseEntity {
+    @PrimaryGeneratedColumn({ name: 'id' })
+    id: number;
 
-    @Column({ nullable: false, length: 10, unique: true })
+    @Column({ name: 'phone_number', length: 10, unique: true })
     phone_number: string;
 
-    @Column({ nullable: false })
+    @Column({ name: 'password' })
     password: string;
 
-    @OneToMany(() => Patient, patient => patient.user)
+    @OneToMany(type => Patient, patient => patient.user)
     patients: Patient[];
 }

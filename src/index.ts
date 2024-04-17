@@ -15,7 +15,7 @@ import { appointmentRouter } from "./routes/appointment";
 const app = express();
 app.use(express.json());
 app.use("/user", userRouter);
-app.use("/patient", patientRouter);
+app.use("/patients", patientRouter);
 app.use("/appointment", appointmentRouter);
 
 const errorHandler = (error: Error, req: Request, res: Response) => {

@@ -14,9 +14,10 @@ export const AppDataSource = new DataSource({
     username: DB_USERNAME ? DB_USERNAME : 'postgres',
     password: DB_PASSWORD ? DB_PASSWORD : 'postgres',
     database: DB_NAME ? DB_NAME : 'EUCare',
-    synchronize: false,
+    synchronize: true,
     logging: false,      //logging logs sql command on the terminal
     entities: [`${__dirname}/**/*.entity{.ts,.js}`],
     migrations: [`${__dirname}/migration/*.ts`],
     subscribers: [],
+    migrationsTransactionMode: 'each'
 });
