@@ -4,7 +4,7 @@ import * as path from "path";
 import { Request, Response } from "express";
 import { AppDataSource } from "./data-source";
 import { config as envConfig } from "dotenv";
-const envPath = path.resolve(__dirname, "..", "config.env");
+const envPath = path.resolve(__dirname, "..", ".env");
 envConfig({ path: envPath });
 
 import { getEnv } from "./utils/env-variables";

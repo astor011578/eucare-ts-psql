@@ -8,18 +8,19 @@
       "clean": "rimraf build",
       "build": "npm run clean && tsc",
       "start": "nodemon src/index.ts",
-      "typeorm": "typeorm-ts-node-commonjs",
-      "migration": "npm run typeorm migration:run -- -d ./src/data-source.ts"
+      "migration": "npx prisma migrate dev --name \"init\""
    },
    "devDependencies": {
       "@types/express": "^4.17.21",
       "@types/node": "^16.11.10",
       "nodemon": "^3.1.0",
+      "prisma": "^5.12.1",
       "rimraf": "^5.0.5",
       "ts-node": "10.9.1",
       "typescript": "4.5.2"
    },
    "dependencies": {
+      "@prisma/client": "^5.12.1",
       "dotenv": "^16.4.5",
       "express": "^4.19.2",
       "path": "^0.12.7",
