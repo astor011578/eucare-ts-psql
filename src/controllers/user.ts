@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { CustomError, MissingFieldError, IncorrectFormatError, DataNotFoundError } from "../utils/custom-errors";
+import { CustomError, DataNotFoundError } from "../utils/custom-errors";
+import { checkMissingFields, checkPhoneNumber } from "../utils/check-fields";
 import { AppDataSource } from "../data-source";
 import { User } from "../entities/user.entity";
 
@@ -10,15 +11,13 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
     /**
      * 1. 檢查是否有缺少欄位
      */
-    if (!username) throw new MissingFieldError('username (phone number)');
-    if (!password) throw new MissingFieldError('password');
+    checkMissingFields('username (phone number)', username);
+    checkMissingFields('password', password);
 
     /**
      * 2. 檢查手機號碼的格式是否正確
      */
-    const phoneReg = /^(09)[0-9]{8}$/;
-    const isCorrectPhone = (username.match(phoneReg)) ? true : false;
-    if (!isCorrectPhone) throw new IncorrectFormatError('username (phone number)');
+    checkPhoneNumber(username);
 
     /**
      * 3. 欄位檢查正確，準備新增一筆使用者資料
@@ -62,15 +61,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     /**
      * 1. 檢查是否有缺少欄位
      */
-    if (!username || !username.trim().length) throw new MissingFieldError('username (phone number)');
-    if (!password || !password.trim().length) throw new MissingFieldError('password');
+    checkMissingFields('username (phone number)', username);
+    checkMissingFields('password', password);
 
     /**
      * 2. 檢查手機號碼的格式是否正確
      */
-    const phoneReg = /^(09)[0-9]{8}$/;
-    const isCorrectPhone = (username.match(phoneReg)) ? true : false;
-    if (!isCorrectPhone) throw new IncorrectFormatError('username (phone number)');
+    checkPhoneNumber(username);
 
     /**
      * 3. 檢查使用者手機號碼是否尚未被註冊

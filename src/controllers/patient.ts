@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { CustomError, MissingFieldError, IncorrectFormatError, DataNotFoundError } from "../utils/custom-errors";
+import { CustomError, IncorrectFormatError, DataNotFoundError } from "../utils/custom-errors";
+import { checkMissingFields, checkPhoneNumber, checkIdCardNumber } from "../utils/check-fields";
 import { AppDataSource } from "../data-source";
 import { Patient } from "../entities/patient.entity";
 import { User } from "../entities/user.entity";
@@ -16,9 +17,7 @@ export const getPatients = async (req: Request, res: Response): Promise<void> =>
     /**
      * 2. 檢查手機號碼的格式是否正確
      */
-    const phoneReg = /^(09)[0-9]{8}$/;
-    const isCorrectPhone = (username.match(phoneReg)) ? true : false;
-    if (!isCorrectPhone) throw new IncorrectFormatError('username (phone number)');
+    checkPhoneNumber(username);
 
     /**
      * 3. 查詢此會員的 id
@@ -59,9 +58,7 @@ export const addPatient = async (req: Request, res: Response): Promise<void> => 
     /**
      * 2. 檢查病患身分證字號格式
      */
-    const idNumberRegex = /^[A-Z]{1}[1-2]{1}[0-9]{8}$/;
-    const isValidIdNumber = idNumberRegex.test(patientIdNumber);
-    if (!isValidIdNumber) throw new IncorrectFormatError("patient's id card number");
+    checkIdCardNumber(patientIdNumber);
 
     const patientRepo = AppDataSource.getRepository(Patient);
     const userRepo = AppDataSource.getRepository(User);
@@ -99,20 +96,3 @@ export const addPatient = async (req: Request, res: Response): Promise<void> => 
   }
 };
 
-/**
- * @description 檢查是否有缺少欄位
- * @param fieldName 欄位名稱
- * @param fieldValue 欄位值
- */
-const checkMissingFields = (fieldName: string, fieldValue: string | Date) => {
-  switch (typeof fieldValue) {
-    case "string": {
-      if (!fieldValue || !fieldValue.trim().length) throw new MissingFieldError(fieldName);
-      return true;
-    }
-    default: {
-      if (!fieldValue) throw new MissingFieldError(fieldName);
-      return true;
-    }
-  }
-};
