@@ -1,6 +1,6 @@
 {
    "name": "eucare-ts-psql",
-   "version": "0.0.1",
+   "version": "1.0.0",
    "description": "The back-end examination of EUCare. Language: TypeScript, Database: PostgreSQL",
    "author": "Astor Yang",
    "type": "commonjs",
